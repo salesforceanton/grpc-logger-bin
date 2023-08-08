@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoggerbinServiceClient interface {
-	Log(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Empty, error)
+	AddLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type loggerbinServiceClient struct {
@@ -33,9 +33,9 @@ func NewLoggerbinServiceClient(cc grpc.ClientConnInterface) LoggerbinServiceClie
 	return &loggerbinServiceClient{cc}
 }
 
-func (c *loggerbinServiceClient) Log(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *loggerbinServiceClient) AddLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/loggerbin.LoggerbinService/Log", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/loggerbin.LoggerbinService/AddLog", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *loggerbinServiceClient) Log(ctx context.Context, in *LogRequest, opts .
 // All implementations must embed UnimplementedLoggerbinServiceServer
 // for forward compatibility
 type LoggerbinServiceServer interface {
-	Log(context.Context, *LogRequest) (*Empty, error)
+	AddLog(context.Context, *LogRequest) (*Empty, error)
 	mustEmbedUnimplementedLoggerbinServiceServer()
 }
 
@@ -54,8 +54,8 @@ type LoggerbinServiceServer interface {
 type UnimplementedLoggerbinServiceServer struct {
 }
 
-func (UnimplementedLoggerbinServiceServer) Log(context.Context, *LogRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Log not implemented")
+func (UnimplementedLoggerbinServiceServer) AddLog(context.Context, *LogRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLog not implemented")
 }
 func (UnimplementedLoggerbinServiceServer) mustEmbedUnimplementedLoggerbinServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterLoggerbinServiceServer(s grpc.ServiceRegistrar, srv LoggerbinServic
 	s.RegisterService(&LoggerbinService_ServiceDesc, srv)
 }
 
-func _LoggerbinService_Log_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LoggerbinService_AddLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoggerbinServiceServer).Log(ctx, in)
+		return srv.(LoggerbinServiceServer).AddLog(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/loggerbin.LoggerbinService/Log",
+		FullMethod: "/loggerbin.LoggerbinService/AddLog",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerbinServiceServer).Log(ctx, req.(*LogRequest))
+		return srv.(LoggerbinServiceServer).AddLog(ctx, req.(*LogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var LoggerbinService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LoggerbinServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Log",
-			Handler:    _LoggerbinService_Log_Handler,
+			MethodName: "AddLog",
+			Handler:    _LoggerbinService_AddLog_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -31,5 +31,5 @@ message Empty {
 }
 
 service LoggerbinService {
-  rpc Log(LogRequest) returns (Empty) {}
+  rpc AddLog(LogRequest) returns (Empty) {}
 }

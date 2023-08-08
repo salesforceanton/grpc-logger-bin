@@ -16,7 +16,7 @@ type Config struct {
 	DBUsername string `envconfig:"DB_USERNAME"`
 	DBPassword string `envconfig:"DB_PASSWORD"`
 	DBName     string `envconfig:"DB_DATABASE"`
-	ServerPort string `envconfig:"SERVER_PORT"`
+	ServerPort int    `envconfig:"SERVER_PORT"`
 }
 
 // Recieve configuration values from env variables
