@@ -4,7 +4,7 @@ package loggerbin;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "../pkg/domain/loggerbin";
+option go_package = "./pkg/domain/loggerbin";
 
 message LogRequest {
   enum Actions {
