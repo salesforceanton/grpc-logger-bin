@@ -69,5 +69,4 @@ func main() {
 	}
 
 	logrus.Info("Server shutdown successfully")
-
 }

@@ -15,7 +15,7 @@ type Config struct {
 	DBUri      string `envconfig:"DB_URI"`
 	DBUsername string `envconfig:"DB_USERNAME"`
 	DBPassword string `envconfig:"DB_PASSWORD"`
-	DBName     string `envconfig:"DB_DATABASE"`
+	DBName     string `envconfig:"DB_DATABASE_NAME"`
 	ServerPort int    `envconfig:"SERVER_PORT"`
 }
 
