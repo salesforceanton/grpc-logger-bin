@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/salesforceanton/grpc-logger-bin/internal/config"
@@ -37,11 +41,9 @@ func main() {
 	repos := repository.NewRepository(db)
 	service := service.NewService(repos)
 	handler := hanler.NewHandler(service)
-
 	server := server.New(handler)
 
-	fmt.Println("SERVER STARTED", time.Now())
-
+	logrus.Info(fmt.Sprintf("SERVER STARTED: %s", time.Now().Local().String()))
 	go func() {
 		if err := server.ListenAndServe(cfg.ServerPort); err != nil {
 			logrus.WithFields(logrus.Fields{
@@ -53,6 +55,19 @@ func main() {
 
 	}()
 
-	logrus.Info(fmt.Sprintf("SERVER STARTED: %s", time.Now().Local().String()))
+	// Gracefull shutdown
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, syscall.SIGTERM, syscall.SIGINT)
+	<-exit
+
+	if err := db.Client().Disconnect(context.Background()); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"handler": "main",
+			"problem": "Error with closing DB connection",
+		}).Error(err)
+		return
+	}
+
+	logrus.Info("Server shutdown successfully")
 
 }
