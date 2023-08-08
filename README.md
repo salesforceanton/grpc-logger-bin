@@ -1,10 +1,10 @@
 # grpc-logger-bin
-## Web-server to perform CRUD operations with Event object
+## gRPC server to collect logs from another microservices system component
 
 ### Description:
 
-This is example of creation simple gRPC server to collect logs from another microservices system component
-TO generate go-files from .proto wer can use command below
+This is example of creation simple gRPC server to collect logs from another microservices system component and store in MongoDB database instance.
+To generate go-files from .proto wer can use command below
 
 ```protoc proto/loggerbin.proto --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative --proto_path=.```
 
