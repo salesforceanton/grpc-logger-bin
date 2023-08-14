@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/salesforceanton/grpc-logger-bin/internal/config"
-	hanler "github.com/salesforceanton/grpc-logger-bin/internal/handler"
+	handler "github.com/salesforceanton/grpc-logger-bin/internal/handler"
 	repository "github.com/salesforceanton/grpc-logger-bin/internal/repository/mongo"
 	"github.com/salesforceanton/grpc-logger-bin/internal/server"
 	"github.com/salesforceanton/grpc-logger-bin/internal/service"
@@ -40,7 +40,7 @@ func main() {
 	// Set dependenties
 	repos := repository.NewRepository(db)
 	service := service.NewService(repos)
-	handler := hanler.NewHandler(service)
+	handler := handler.NewHandler(service)
 	server := server.New(handler)
 
 	logrus.Info(fmt.Sprintf("SERVER STARTED: %s", time.Now().Local().String()))
